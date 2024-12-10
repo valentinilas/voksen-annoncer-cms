@@ -37,8 +37,5 @@ export default buildConfig({
     payloadCloudPlugin(),
     // storage-adapter-placeholder
   ],
-  cors: [
-    'http://localhost:3000', // Development frontend
-    'https://voksen-annoncer.com', // Production frontend
-  ],
+  cors: '*',
 })
