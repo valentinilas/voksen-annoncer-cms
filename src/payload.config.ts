@@ -6,6 +6,8 @@ import path from 'path'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
 import sharp from 'sharp'
+import { s3Storage } from '@payloadcms/storage-s3'
+
 
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
@@ -14,6 +16,7 @@ import { Posts } from './collections/Posts'
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
+console.log('ENV PATH',process.env.S3_REGION );
 export default buildConfig({
   admin: {
     user: Users.slug,
@@ -35,7 +38,23 @@ export default buildConfig({
   sharp,
   plugins: [
     payloadCloudPlugin(),
-    // storage-adapter-placeholder
+    s3Storage({
+      collections: {
+        media: {
+          prefix:'media',
+        }
+      },
+      bucket: process.env.S3_BUCKET || '',
+      config: {
+        forcePathStyle:true,
+        credentials: {
+          accessKeyId: process.env.S3_ACCESS_KEY_ID || '',
+          secretAccessKey: process.env.S3_SECRET_ACCESS_KEY || '',
+        },
+        region: process.env.S3_REGION,
+        endpoint: process.env.S3_ENDPOINT,
+      },
+    }),
   ],
   cors: '*',
 })
