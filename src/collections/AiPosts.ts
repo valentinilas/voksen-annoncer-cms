@@ -18,7 +18,7 @@ export const AiPosts: CollectionConfig = {
     },
     hooks: {
         beforeValidate: [
-            async ({ data, req }) => {
+            async ({ data }) => {
 
 
 
