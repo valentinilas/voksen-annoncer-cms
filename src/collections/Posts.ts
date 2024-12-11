@@ -30,6 +30,10 @@ export const Posts: CollectionConfig = {
           throw new Error('No data available for validation');
         }
 
+        if (!data.Topic) {
+          throw new Error('Missing Topic');
+        }
+
         try {
           const prompt = `
                 Generate a blog post based on the following topic, and deliver it in Danish. Format the output as follows:
