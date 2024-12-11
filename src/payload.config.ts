@@ -9,12 +9,18 @@ import sharp from 'sharp'
 import { s3Storage } from '@payloadcms/storage-s3'
 
 
+
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 import { Posts } from './collections/Posts'
+import { AiPosts } from './collections/AiPosts'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
+
+
+
+
 
 export default buildConfig({
   admin: {
@@ -23,7 +29,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, Posts],
+  collections: [Users, Media, Posts,AiPosts],
   upload: {
     limits: {
       fileSize: 2000000, // 5MB, written in bytes

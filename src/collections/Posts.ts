@@ -1,5 +1,6 @@
 import type { CollectionConfig } from 'payload'
 import slugify from 'slugify'
+import { lexicalEditor } from '@payloadcms/richtext-lexical'
 
 
 export const Posts: CollectionConfig = {
@@ -12,7 +13,7 @@ export const Posts: CollectionConfig = {
     beforeValidate: [
       ({ data }) => {
         // Generate slug from title if not already provided
-        if (data && data.Title && (!data.Slug || data.slug.trim() === '')) {
+        if (data && data.Title && (!data.Slug || data.Slug.trim() === '')) {
           const timestamp = new Date().getTime(); // Current timestamp in milliseconds
           const sluggedTitle = slugify(data.Title, { lower: true, strict: true });
           data.Slug = `${timestamp}-${sluggedTitle}`;
@@ -26,10 +27,14 @@ export const Posts: CollectionConfig = {
       name: 'Slug',
       type: 'text',
       unique: true, // Ensure slug uniqueness
-      admin:{
+      admin: {
         readOnly: true,
         description: 'Auto generated on Save'
       }
+    },
+    {
+      name: 'Topic',
+      type: 'text',
     },
     {
       name: 'Author',
@@ -47,6 +52,12 @@ export const Posts: CollectionConfig = {
     {
       name: 'Body Text',
       type: 'textarea',
+    },
+    {
+      name: 'RT',
+      type: 'richText',
+      hidden: false,
+      editor: lexicalEditor({}),
     },
     {
       name: 'Image', // The name of the field for image uploads
