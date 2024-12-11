@@ -13,7 +13,6 @@ import { s3Storage } from '@payloadcms/storage-s3'
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 import { Posts } from './collections/Posts'
-import { AiPosts } from './collections/AiPosts'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
