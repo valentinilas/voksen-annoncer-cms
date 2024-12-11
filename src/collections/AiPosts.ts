@@ -1,11 +1,8 @@
 import type { CollectionConfig } from 'payload'
 import slugify from 'slugify'
-import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import { OpenAI } from 'openai'
-import { v4 as uuidv4 } from 'uuid';  // Import the UUID function
 
 
-import fetch from 'node-fetch'; // Install this package for fetching images: npm install node-fetch
 
 
 // Initialize OpenAI client
