@@ -20,7 +20,9 @@ export const AiPosts: CollectionConfig = {
         beforeValidate: [
             async ({ data }) => {
 
-
+                if (!data) {
+                    throw new Error('No data available for validation');
+                }
 
                 try {
                     const prompt = `
@@ -50,6 +52,12 @@ export const AiPosts: CollectionConfig = {
                     })
 
                     const generatedText = response.choices[0].message.content;
+
+                    if (!generatedText) {
+                        throw new Error('No content generated from OpenAI');
+                    }
+
+                    
                     console.log(generatedText);
 
                     // Extract content using regex
