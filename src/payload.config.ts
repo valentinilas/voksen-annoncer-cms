@@ -29,7 +29,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, Posts,AiPosts],
+  collections: [Users, Media, Posts],
   upload: {
     limits: {
       fileSize: 2000000, // 5MB, written in bytes
@@ -51,12 +51,12 @@ export default buildConfig({
     s3Storage({
       collections: {
         media: {
-          prefix:'media',
+          prefix: 'media',
         }
       },
       bucket: process.env.S3_BUCKET || '',
       config: {
-        forcePathStyle:true,
+        forcePathStyle: true,
         credentials: {
           accessKeyId: process.env.S3_ACCESS_KEY_ID || '',
           secretAccessKey: process.env.S3_SECRET_ACCESS_KEY || '',

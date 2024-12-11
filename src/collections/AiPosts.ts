@@ -18,7 +18,12 @@ export const AiPosts: CollectionConfig = {
     },
     hooks: {
         beforeValidate: [
-            async ({ data }) => {
+            async ({ data, originalDoc  }) => {
+
+                if (originalDoc) {
+                    console.log('Skipping content generation, as this is an update.');
+                    return data;
+                }
 
                 if (!data) {
                     throw new Error('No data available for validation');
