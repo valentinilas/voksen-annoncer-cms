@@ -16,7 +16,6 @@ import { Posts } from './collections/Posts'
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
-console.log('ENV PATH',process.env.S3_REGION );
 export default buildConfig({
   admin: {
     user: Users.slug,
@@ -25,6 +24,11 @@ export default buildConfig({
     },
   },
   collections: [Users, Media, Posts],
+  upload: {
+    limits: {
+      fileSize: 2000000, // 5MB, written in bytes
+    },
+  },
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {

@@ -11,14 +11,12 @@ export const Posts: CollectionConfig = {
   hooks: {
     beforeValidate: [
       ({ data }) => {
-        console.log(typeof data?.Title);
         // Generate slug from title if not already provided
         if (data && data.Title && (!data.Slug || data.slug.trim() === '')) {
           const timestamp = new Date().getTime(); // Current timestamp in milliseconds
           const sluggedTitle = slugify(data.Title, { lower: true, strict: true });
           data.Slug = `${timestamp}-${sluggedTitle}`;
         }
-        console.log(data);
         return data;
       }
     ]

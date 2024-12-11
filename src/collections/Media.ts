@@ -7,6 +7,7 @@ export const Media: CollectionConfig = {
     read: () => true,
   },
 
+
   fields: [
     {
       name: 'alt',
@@ -28,5 +29,17 @@ export const Media: CollectionConfig = {
       },
     ],
   },
-  upload: true,
+  upload: {
+
+    imageSizes: [
+      {
+        name: 'thumbnail',
+        width: 40,
+        height: 40,
+        position: 'centre',
+      },],
+    adminThumbnail: 'thumbnail',
+    mimeTypes: ['image/*'],
+
+  }
 }
