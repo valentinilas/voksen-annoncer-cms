@@ -35,6 +35,7 @@ export const Posts: CollectionConfig = {
         }
 
         try {
+          console.log('Trying prompt');
           const prompt = `
                 Generate a blog post based on the following topic, and deliver it in Danish. Format the output as follows:
                 
@@ -46,7 +47,7 @@ export const Posts: CollectionConfig = {
 
                 Topic: ${data.Topic}
                 `;
-
+          console.log('Sending prompt');
           const response = await openai.chat.completions.create({
             model: 'gpt-4o-mini',
             messages: [
@@ -61,15 +62,14 @@ export const Posts: CollectionConfig = {
             ],
           })
 
+          console.log('GPT Response Received');
+
           const generatedText = response.choices[0].message.content;
 
           if (!generatedText) {
             throw new Error('No content generated from OpenAI');
           }
-
-
-          console.log(generatedText);
-
+          console.log('Extracting Text');
           // Extract content using regex
           const titleMatch = generatedText.match(/\*\*Title:\*\* (.+)/);
           const summaryMatch = generatedText.match(/\*\*Summary:\*\* (.+)/);
@@ -78,18 +78,22 @@ export const Posts: CollectionConfig = {
           const title = titleMatch ? titleMatch[1].trim() : 'Untitled';
           const summary = summaryMatch ? summaryMatch[1].trim() : 'No summary provided.';
           const body = bodyMatch ? bodyMatch[1].trim() : 'No body content provided.';
-
+          console.log('Text Extracted');
           // Assign the extracted content to the fields
           data.Title = title;
           data.Summary = summary;
           data['Body Text'] = body;
 
+          console.log('Text Injected');
+
+          console.log('Creating Slug');
           // Generate slug from the generated Title
           if (title && (!data.Slug || data.Slug.trim() === '')) {
             const timestamp = new Date().getTime(); // Current timestamp in milliseconds
             const sluggedTitle = slugify(title, { lower: true, strict: true });
             data.Slug = `${timestamp}-${sluggedTitle}`;
           }
+          console.log('Slug created & Injected');
 
           // Set default Author if not provided
           if (!data.Author || data.Author.trim() === '') {
