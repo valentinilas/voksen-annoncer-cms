@@ -16,7 +16,10 @@ export const Posts: CollectionConfig = {
   access: {
     // Allow anyone (even unauthenticated users) to read posts
     read: () => true,
+    // Allow public creation of posts (no authentication)
+    // create: () => true, 
   },
+
   hooks: {
     beforeValidate: [
       async ({ data, originalDoc }) => {
@@ -204,6 +207,7 @@ export const Posts: CollectionConfig = {
       hidden: false,
       editor: lexicalEditor({}),
     },
+
     {
       name: 'Image', // The name of the field for image uploads
       type: 'upload', // The field type for file uploads
